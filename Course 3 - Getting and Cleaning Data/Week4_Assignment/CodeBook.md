@@ -17,6 +17,7 @@ There are 6 different types of activities:
 * STANDING
 * LAYING
 
+## Variable list
 The tidy data contains 6 rows (averaged based on activity) and 81 columns (79 variables and activity labels):
 
 [1] "subject_id"                      "activity"                       
