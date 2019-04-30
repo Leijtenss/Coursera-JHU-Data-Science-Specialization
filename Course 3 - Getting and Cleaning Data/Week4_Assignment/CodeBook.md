@@ -89,6 +89,6 @@ The tidy data contains 6 rows (averaged based on activity) and 68 columns (66 va
 * "fBodyBodyGyroJerkMag-std()"
 
 ## Variable types
-subject_id: numberic
-activity: character
+subject_id: integer
+activity: factor
 all other: numeric
