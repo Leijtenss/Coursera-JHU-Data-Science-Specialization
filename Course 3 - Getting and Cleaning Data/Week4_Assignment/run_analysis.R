@@ -26,7 +26,7 @@ features <- read.table("./UCI HAR Dataset/features.txt")
 act_labels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
 # Create a list with feature number for those with mean and stdev for each measurement
-feat_list <- features[grep("Mean()|mean()|std()", features[, 2]),]
+feat_list <- features[grep("\\bmean()\\b|\\bstd()\\b", features[, 2]),]
 x_total <- x_total[,feat_list[,1]]
 
 
@@ -49,3 +49,7 @@ final_mean <- final %>%
                         summarize_each(funs(mean))
 
 write.table(final_mean, file = "./UCI HAR Dataset/tidydata.txt", row.names = FALSE, col.names = TRUE)
+
+
+names(final_mean)
+colnames(final_mean)
