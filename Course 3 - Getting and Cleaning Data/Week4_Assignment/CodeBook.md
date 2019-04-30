@@ -1,7 +1,7 @@
 ## Codebook for tidydata.txt
 This dataset contains 180 rows and 68 columns. Each row has averaged variables for each subject and each activity.
 
-## Focus on the mean- and stdev-variables
+## Focus
 A selection of features was made by looking at those containing the following strings:
 mean(): Mean value
 std(): Standard deviation
