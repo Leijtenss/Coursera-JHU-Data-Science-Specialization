@@ -50,6 +50,6 @@ final_mean <- final %>%
 
 write.table(final_mean, file = "./UCI HAR Dataset/tidydata.txt", row.names = FALSE, col.names = TRUE)
 
-
-names(final_mean)
-colnames(final_mean)
+# Write file with list of columns in tidydata.txt
+list_columns <- colnames(final_mean)
+write.table(list_columns, file = "./UCI HAR Dataset/list_columns.txt", row.names = FALSE, col.names = TRUE)
