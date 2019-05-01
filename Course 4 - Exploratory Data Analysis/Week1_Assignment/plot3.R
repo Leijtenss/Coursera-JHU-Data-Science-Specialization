@@ -1,0 +1,30 @@
+## Step 1 - Load the data
+# Load only records for 2007-02-01 and 2007-02-02
+househ <- read.table("household_power_consumption.txt", header = FALSE, 
+                     sep = ";", dec = ".", skip = 66637, nrows = 2880,
+                     col.names=c("Date", 
+                                 "Time", 
+                                 "Global_active_power", 
+                                 "Global_reactive_power",
+                                 "Voltage",
+                                 "Global_intensity",
+                                 "Sub_metering_1",
+                                 "Sub_metering_2",
+                                 "Sub_metering_3"))
+
+# Create datetime by pasting together Date and Time
+househ$datetime <- with(househ, as.POSIXct(paste(Date, Time), format="%d/%m/%Y %H:%M"))
+
+
+## Plot 3
+# Plot and save to png
+png('plot3.png')
+
+plot(househ$datetime, househ$Sub_metering_1, type = "l", xlab = "", ylab = "Energy sub metering")
+lines(househ$datetime, househ$Sub_metering_2, type = "l", xlab = "", ylab = "Energy sub metering", col = "red")
+lines(househ$datetime, househ$Sub_metering_3, type = "l", xlab = "", ylab = "Energy sub metering", col = "blue")
+legend("topright", col = c("black", "red", "blue"), lty=1, lwd=2, legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"))
+
+dev.off()
+
+
