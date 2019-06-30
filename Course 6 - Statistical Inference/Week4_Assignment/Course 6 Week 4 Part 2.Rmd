@@ -1,0 +1,72 @@
+---
+title: "Course 6 - Statistical Inference Week 4"
+author: "Stephan Leijtens"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Part 2 of Peer Assignment
+### 1. Load the ToothGrowth data and perform some basic exploratory data analyses
+```{r}
+library(datasets)
+library(ggplot2)
+
+head(ToothGrowth)
+str(ToothGrowth)
+```
+
+## 2. Provide a basic summary of the data.
+```{r}
+summary(ToothGrowth)
+```
+```{r}
+ToothGrowth$dose <- as.factor(ToothGrowth$dose)
+ggplot(aes(x=dose, y=len), data = ToothGrowth) + 
+        geom_boxplot(aes(fill=dose)) + 
+        ggtitle("Tooth Length by Dose/Supplement") + 
+        xlab("Dose") + 
+        ylab("Tooth Length") +
+        facet_grid(~supp) + scale_fill_brewer(palette = "Dark2")
+```
+This gives us a visual indication that higher doses improve tooth growth, but it is still unclear if one type of supplement is more effective than the other.
+
+### 3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose
+Our first hypothesis that we want to check is whether or not tooth growth is correlated with taking supplements. More specifically:
+- H0: There is no significant difference in tooth growth between delivery methods (OJ and VC)
+- H1: There is a significant difference in tooth growth between delivery methods (OJ and VC)
+```{r}
+t.test(len~supp,paired=FALSE,var.equal=FALSE,data=ToothGrowth)
+```
+We see a p-value of 0.06 which is larger than the 0.05 we need to be able to reject the null hypothesis.
+
+The second hypothesis is the following:
+- H0: Tooth growth is not correlated with dose amount 
+- H1: Tooth growth is correlated with dose amount
+
+```{r}
+dose1 <- ToothGrowth$len[ToothGrowth$dose == 0.5]
+dose2 <- ToothGrowth$len[ToothGrowth$dose == 1.0]
+dose3 <- ToothGrowth$len[ToothGrowth$dose == 2.0]
+
+t.test(dose1, dose2, paired=FALSE, var.equal=FALSE)
+```
+The p-value is very small which allows us to reject the null hypothesis.
+Continuing:
+```{r}
+t.test(dose1, dose3, paired=FALSE, var.equal=FALSE)
+```
+Also here we reject the null hypothesis since we have a very small p-value.
+And finally:
+```{r}
+t.test(dose2, dose3, paired=FALSE, var.equal=FALSE)
+```
+And in the final case we reject the null hypothesis as well.
+
+### 4. State your conclusions and the assumptions needed for your conclusions.
+Following our hypothesis tests it is safe to say that tooth length increases when dosage amount increases, regardless of administration method. We could not draw any conclusions if either OJ or VC was better.
+The assumptions made are that this sample is a proper representation of the population and that the distribution of the means is normal.
